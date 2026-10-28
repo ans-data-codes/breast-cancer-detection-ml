@@ -1,0 +1,344 @@
+{
+  "dataset": "Wisconsin Diagnostic Breast Cancer (scikit-learn)",
+  "random_state": 42,
+  "test_size": 0.2,
+  "positive_class": "malignant",
+  "feature_names": [
+    "radius_mean",
+    "texture_mean",
+    "perimeter_mean",
+    "area_mean",
+    "smoothness_mean",
+    "compactness_mean",
+    "concavity_mean",
+    "concave points_mean",
+    "symmetry_mean",
+    "fractal dimension_mean",
+    "radius_se",
+    "texture_se",
+    "perimeter_se",
+    "area_se",
+    "smoothness_se",
+    "compactness_se",
+    "concavity_se",
+    "concave points_se",
+    "symmetry_se",
+    "fractal dimension_se",
+    "radius_worst",
+    "texture_worst",
+    "perimeter_worst",
+    "area_worst",
+    "smoothness_worst",
+    "compactness_worst",
+    "concavity_worst",
+    "concave points_worst",
+    "symmetry_worst",
+    "fractal dimension_worst"
+  ],
+  "pca": {
+    "pc1_explained_variance": 0.44272025607526355,
+    "pc2_explained_variance": 0.1897118204403308,
+    "components_for_95_percent": 10
+  },
+  "selection_rule": "Highest held-out test recall, then highest held-out test F1.",
+  "experiments": [
+    {
+      "model": "Logistic Regression",
+      "k": 30,
+      "best_params": {
+        "model__C": 1
+      },
+      "cv_f1": 0.9640480895915677,
+      "training_time_seconds": 0.23505580000346527,
+      "metrics": {
+        "accuracy": 0.9649122807017544,
+        "precision": 0.975,
+        "recall": 0.9285714285714286,
+        "f1": 0.9512195121951219,
+        "roc_auc": 0.996031746031746,
+        "confusion_matrix": {
+          "tn": 71,
+          "fp": 1,
+          "fn": 3,
+          "tp": 39
+        }
+      }
+    },
+    {
+      "model": "Logistic Regression",
+      "k": 17,
+      "best_params": {
+        "model__C": 10
+      },
+      "cv_f1": 0.9549242573283495,
+      "training_time_seconds": 0.1561608999618329,
+      "metrics": {
+        "accuracy": 0.9736842105263158,
+        "precision": 0.975609756097561,
+        "recall": 0.9523809523809523,
+        "f1": 0.963855421686747,
+        "roc_auc": 0.998015873015873,
+        "confusion_matrix": {
+          "tn": 71,
+          "fp": 1,
+          "fn": 2,
+          "tp": 40
+        }
+      }
+    },
+    {
+      "model": "K-Nearest Neighbors",
+      "k": 30,
+      "best_params": {
+        "model__n_neighbors": 3,
+        "model__weights": "uniform"
+      },
+      "cv_f1": 0.9632634032634033,
+      "training_time_seconds": 1.6930656000040472,
+      "metrics": {
+        "accuracy": 0.9385964912280702,
+        "precision": 0.972972972972973,
+        "recall": 0.8571428571428571,
+        "f1": 0.9113924050632911,
+        "roc_auc": 0.982473544973545,
+        "confusion_matrix": {
+          "tn": 71,
+          "fp": 1,
+          "fn": 6,
+          "tp": 36
+        }
+      }
+    },
+    {
+      "model": "K-Nearest Neighbors",
+      "k": 17,
+      "best_params": {
+        "model__n_neighbors": 3,
+        "model__weights": "uniform"
+      },
+      "cv_f1": 0.9487552034241542,
+      "training_time_seconds": 0.9897185000008903,
+      "metrics": {
+        "accuracy": 0.9736842105263158,
+        "precision": 0.975609756097561,
+        "recall": 0.9523809523809523,
+        "f1": 0.963855421686747,
+        "roc_auc": 0.9978505291005291,
+        "confusion_matrix": {
+          "tn": 71,
+          "fp": 1,
+          "fn": 2,
+          "tp": 40
+        }
+      }
+    },
+    {
+      "model": "Decision Tree",
+      "k": 30,
+      "best_params": {
+        "model__max_depth": 7,
+        "model__min_samples_split": 5
+      },
+      "cv_f1": 0.8968567664219839,
+      "training_time_seconds": 0.5094075999804772,
+      "metrics": {
+        "accuracy": 0.9473684210526315,
+        "precision": 0.95,
+        "recall": 0.9047619047619048,
+        "f1": 0.926829268292683,
+        "roc_auc": 0.9462632275132276,
+        "confusion_matrix": {
+          "tn": 70,
+          "fp": 2,
+          "fn": 4,
+          "tp": 38
+        }
+      }
+    },
+    {
+      "model": "Decision Tree",
+      "k": 17,
+      "best_params": {
+        "model__max_depth": 7,
+        "model__min_samples_split": 2
+      },
+      "cv_f1": 0.9145208750619197,
+      "training_time_seconds": 0.37665910000214353,
+      "metrics": {
+        "accuracy": 0.9385964912280702,
+        "precision": 0.9487179487179487,
+        "recall": 0.8809523809523809,
+        "f1": 0.9135802469135802,
+        "roc_auc": 0.9216269841269841,
+        "confusion_matrix": {
+          "tn": 70,
+          "fp": 2,
+          "fn": 5,
+          "tp": 37
+        }
+      }
+    },
+    {
+      "model": "Gaussian Naive Bayes",
+      "k": 30,
+      "best_params": {
+        "model__var_smoothing": 1e-09
+      },
+      "cv_f1": 0.9170390883626178,
+      "training_time_seconds": 0.06739089998882264,
+      "metrics": {
+        "accuracy": 0.9210526315789473,
+        "precision": 0.9230769230769231,
+        "recall": 0.8571428571428571,
+        "f1": 0.8888888888888888,
+        "roc_auc": 0.9890873015873015,
+        "confusion_matrix": {
+          "tn": 69,
+          "fp": 3,
+          "fn": 6,
+          "tp": 36
+        }
+      }
+    },
+    {
+      "model": "Gaussian Naive Bayes",
+      "k": 17,
+      "best_params": {
+        "model__var_smoothing": 1e-09
+      },
+      "cv_f1": 0.9093439135184866,
+      "training_time_seconds": 0.0673462999984622,
+      "metrics": {
+        "accuracy": 0.9385964912280702,
+        "precision": 0.972972972972973,
+        "recall": 0.8571428571428571,
+        "f1": 0.9113924050632911,
+        "roc_auc": 0.9930555555555556,
+        "confusion_matrix": {
+          "tn": 71,
+          "fp": 1,
+          "fn": 6,
+          "tp": 36
+        }
+      }
+    },
+    {
+      "model": "Random Forest",
+      "k": 30,
+      "best_params": {
+        "model__max_depth": 5,
+        "model__n_estimators": 100
+      },
+      "cv_f1": 0.9552850541704228,
+      "training_time_seconds": 9.86222579999594,
+      "metrics": {
+        "accuracy": 0.9736842105263158,
+        "precision": 1.0,
+        "recall": 0.9285714285714286,
+        "f1": 0.9629629629629629,
+        "roc_auc": 0.9950396825396824,
+        "confusion_matrix": {
+          "tn": 72,
+          "fp": 0,
+          "fn": 3,
+          "tp": 39
+        }
+      }
+    },
+    {
+      "model": "Random Forest",
+      "k": 17,
+      "best_params": {
+        "model__max_depth": 5,
+        "model__n_estimators": 300
+      },
+      "cv_f1": 0.93983128372944,
+      "training_time_seconds": 9.164949900005013,
+      "metrics": {
+        "accuracy": 0.9736842105263158,
+        "precision": 1.0,
+        "recall": 0.9285714285714286,
+        "f1": 0.9629629629629629,
+        "roc_auc": 0.9930555555555556,
+        "confusion_matrix": {
+          "tn": 72,
+          "fp": 0,
+          "fn": 3,
+          "tp": 39
+        }
+      }
+    },
+    {
+      "model": "Support Vector Machine",
+      "k": 30,
+      "best_params": {
+        "model__C": 10,
+        "model__gamma": "scale",
+        "model__kernel": "rbf"
+      },
+      "cv_f1": 0.9674103219883271,
+      "training_time_seconds": 1.2969810000504367,
+      "metrics": {
+        "accuracy": 0.9736842105263158,
+        "precision": 1.0,
+        "recall": 0.9285714285714286,
+        "f1": 0.9629629629629629,
+        "roc_auc": 0.9927248677248677,
+        "confusion_matrix": {
+          "tn": 72,
+          "fp": 0,
+          "fn": 3,
+          "tp": 39
+        }
+      }
+    },
+    {
+      "model": "Support Vector Machine",
+      "k": 17,
+      "best_params": {
+        "model__C": 10,
+        "model__gamma": "scale",
+        "model__kernel": "rbf"
+      },
+      "cv_f1": 0.9558887489322272,
+      "training_time_seconds": 1.4618728999630548,
+      "metrics": {
+        "accuracy": 0.9824561403508771,
+        "precision": 1.0,
+        "recall": 0.9523809523809523,
+        "f1": 0.975609756097561,
+        "roc_auc": 0.9970238095238095,
+        "confusion_matrix": {
+          "tn": 72,
+          "fp": 0,
+          "fn": 2,
+          "tp": 40
+        }
+      }
+    }
+  ],
+  "best_model": {
+    "model": "Support Vector Machine",
+    "k": 17,
+    "best_params": {
+      "model__C": 10,
+      "model__gamma": "scale",
+      "model__kernel": "rbf"
+    },
+    "cv_f1": 0.9558887489322272,
+    "training_time_seconds": 1.4618728999630548,
+    "metrics": {
+      "accuracy": 0.9824561403508771,
+      "precision": 1.0,
+      "recall": 0.9523809523809523,
+      "f1": 0.975609756097561,
+      "roc_auc": 0.9970238095238095,
+      "confusion_matrix": {
+        "tn": 72,
+        "fp": 0,
+        "fn": 2,
+        "tp": 40
+      }
+    }
+  }
+}
