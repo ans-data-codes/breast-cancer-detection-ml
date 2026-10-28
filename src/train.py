@@ -72,7 +72,7 @@ def evaluate(estimator, X_test, y_test):
     predicted = estimator.predict(X_test)
     probabilities = estimator.predict_proba(X_test)[:, 1]
     tn, fp, fn, tp = confusion_matrix(y_test, predicted, labels=[0, 1]).ravel()
-    return {
+    metrics = {
         "accuracy": float(accuracy_score(y_test, predicted)),
         "precision": float(precision_score(y_test, predicted, zero_division=0)),
         "recall": float(recall_score(y_test, predicted, zero_division=0)),
@@ -80,6 +80,7 @@ def evaluate(estimator, X_test, y_test):
         "roc_auc": float(roc_auc_score(y_test, probabilities)),
         "confusion_matrix": {"tn": int(tn), "fp": int(fp), "fn": int(fn), "tp": int(tp)},
     }
+    return metrics, probabilities
 
 
 def save_eda_figures(X, y):
@@ -151,9 +152,8 @@ def save_eda_figures(X, y):
     return {"pc1_explained_variance": float(pca.explained_variance_ratio_[0]), "pc2_explained_variance": float(pca.explained_variance_ratio_[1]), "components_for_95_percent": components_95}
 
 
-def save_model_figures(experiments, best, X_train, y_train, X_test, y_test):
+def save_model_figures(experiments, best, y_test):
     """Create the four model evaluation figures."""
-    best_estimator = best["estimator"]
     best_metrics = best["metrics"]
 
     fig, ax = plt.subplots(figsize=(6, 5))
@@ -169,9 +169,9 @@ def save_model_figures(experiments, best, X_train, y_train, X_test, y_test):
     for name in [spec[0] for spec in MODEL_SPECS]:
         choices = [item for item in experiments if item["model"] == name]
         chosen = max(choices, key=lambda item: item["cv_f1"])
-        probs = chosen["estimator"].predict_proba(X_test)[:, 1]
+        probs = chosen["test_probabilities"]
         fpr, tpr, _ = roc_curve(y_test, probs)
-        auc = roc_auc_score(y_test, probs)
+        auc = chosen["metrics"]["roc_auc"]
         ax.plot(fpr, tpr, label=f"{name} (K={chosen['k']}, AUC={auc:.3f})")
     ax.plot([0, 1], [0, 1], "k--", linewidth=1, label="Chance")
     ax.set(title="ROC curves for the CV-best configuration of each model", xlabel="False positive rate", ylabel="True positive rate", xlim=(0, 1), ylim=(0, 1.02))
@@ -288,7 +288,7 @@ def main():
             search.fit(X_train, y_train)
             training_time = time.perf_counter() - started
             # This is the only held-out test evaluation for this tuned run.
-            heldout = evaluate(search.best_estimator_, X_test, y_test)
+            heldout, test_probabilities = evaluate(search.best_estimator_, X_test, y_test)
             experiments.append(
                 {
                     "model": model_name,
@@ -297,6 +297,7 @@ def main():
                     "cv_f1": float(search.best_score_),
                     "training_time_seconds": float(training_time),
                     "metrics": heldout,
+                    "test_probabilities": test_probabilities.tolist(),
                     "estimator": search.best_estimator_,
                 }
             )
@@ -308,9 +309,12 @@ def main():
     dump(best["estimator"], MODELS_DIR / "best_model.joblib")
     (MODELS_DIR / "feature_names.json").write_text(json.dumps(feature_names, indent=2), encoding="utf-8")
 
-    save_model_figures(experiments, best, X_train, y_train, X_test, y_test)
+    save_model_figures(experiments, best, y_test)
 
-    json_experiments = [{key: value for key, value in item.items() if key != "estimator"} for item in experiments]
+    json_experiments = [
+        {key: value for key, value in item.items() if key not in {"estimator", "test_probabilities"}}
+        for item in experiments
+    ]
     metrics = {
         "dataset": "Wisconsin Diagnostic Breast Cancer (scikit-learn)",
         "random_state": RANDOM_STATE,
@@ -320,7 +324,9 @@ def main():
         "pca": pca_summary,
         "selection_rule": "Highest held-out test recall, then highest held-out test F1.",
         "experiments": json_experiments,
-        "best_model": {key: value for key, value in best.items() if key != "estimator"},
+        "best_model": {
+            key: value for key, value in best.items() if key not in {"estimator", "test_probabilities"}
+        },
     }
     (RESULTS_DIR / "metrics.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")
     write_report(metrics, pca_summary, feature_names)

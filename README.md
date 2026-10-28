@@ -38,6 +38,21 @@ Models: Logistic Regression, KNN, Decision Tree, Naive Bayes, Random Forest, SVM
 Each is run with all 30 features and with the top 17 features.
 Metrics: accuracy, precision, recall, F1, ROC-AUC, confusion matrix.
 
+### Final held-out accuracy
+
+Results below come from the fixed stratified 80/20 split (`random_state=42`). The champion is selected by test recall first, then F1; it is the SVM with 17 selected features.
+
+| Model | Accuracy (30 features) | Accuracy (17 features) |
+|---|---:|---:|
+| Logistic Regression | 0.9649 | 0.9737 |
+| K-Nearest Neighbors | 0.9386 | 0.9737 |
+| Decision Tree | 0.9474 | 0.9386 |
+| Gaussian Naive Bayes | 0.9211 | 0.9386 |
+| Random Forest | 0.9737 | 0.9737 |
+| Support Vector Machine | 0.9737 | **0.9825** |
+
+The winning SVM achieved test recall **0.9524**. Full metrics, selected parameters and timings are generated in `results/report_numbers.md`.
+
 ## Project structure
 
 ```
