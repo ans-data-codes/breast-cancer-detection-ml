@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 import json
+import os
 import time
 from pathlib import Path
+
+os.environ.setdefault("LOKY_MAX_CPU_COUNT", str(os.cpu_count() or 1))
 
 import matplotlib
 
@@ -83,7 +86,7 @@ def evaluate(estimator, X_test, y_test):
     return metrics, probabilities
 
 
-def save_eda_figures(X, y):
+def save_eda_figures(X, y, X_train):
     """Create the four exploratory figures and return PCA summary values."""
     FIGURES_DIR.mkdir(parents=True, exist_ok=True)
     MODELS_DIR.mkdir(parents=True, exist_ok=True)
@@ -106,7 +109,9 @@ def save_eda_figures(X, y):
     fig, axes = plt.subplots(2, 2, figsize=(12, 9))
     for ax, feature in zip(axes.flat, key_features):
         grouped = [long_data.loc[long_data["Class"] == label, feature] for label in ("Benign", "Malignant")]
-        artists = ax.boxplot(grouped, labels=["Benign", "Malignant"], patch_artist=True)
+        artists = ax.boxplot(grouped, patch_artist=True)
+        ax.set_xticks([1, 2])
+        ax.set_xticklabels(["Benign", "Malignant"])
         for artist, color in zip(artists["boxes"], ("#4c9f70", "#cf5c60")):
             artist.set_facecolor(color)
         ax.set_title(feature.replace("_", " ").title())
@@ -125,13 +130,14 @@ def save_eda_figures(X, y):
     fig.savefig(FIGURES_DIR / "fig_4_3_correlation_heatmap.png", dpi=160)
     plt.close(fig)
 
-    # This PCA plot is descriptive EDA over the full dataset. It is not used
-    # to train or select any predictive model.
+    # Fit the PCA display basis on training rows only, then project all rows.
+    # The test rows are transformed for the plot but never used to fit it.
     from sklearn.preprocessing import StandardScaler
 
-    scaled = StandardScaler().fit_transform(X)
-    pca = PCA(random_state=RANDOM_STATE).fit(scaled)
-    projection = PCA(n_components=2, random_state=RANDOM_STATE).fit_transform(scaled)
+    scaler = StandardScaler().fit(X_train)
+    scaled_train = scaler.transform(X_train)
+    pca = PCA(random_state=RANDOM_STATE).fit(scaled_train)
+    projection = pca.transform(scaler.transform(X))[:, :2]
     cumulative = np.cumsum(pca.explained_variance_ratio_)
     components_95 = int(np.searchsorted(cumulative, 0.95) + 1)
     fig, ax = plt.subplots(figsize=(8, 6))
@@ -268,7 +274,7 @@ def main():
 
     X, y = load_dataset()
     X_train, X_test, y_train, y_test = get_train_test_split()
-    pca_summary = save_eda_figures(X, y)
+    pca_summary = save_eda_figures(X, y, X_train)
 
     cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=RANDOM_STATE)
     experiments = []
