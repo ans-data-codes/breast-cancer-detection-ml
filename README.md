@@ -82,6 +82,16 @@ python src/train.py              # trains, tunes, evaluates, saves model + figur
 streamlit run app/app.py         # opens the web app in your browser
 ```
 
+In Windows PowerShell, the equivalent commands are:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python src\train.py
+streamlit run app\app.py
+```
+
 ## Using the results in the report
 
 Open `results/report_numbers.md` and copy values into the yellow placeholders in `docs/`. Insert the images from `results/figures/` into the matching figure boxes. In Word, press Ctrl+A then F9 to refresh the contents and figure lists.

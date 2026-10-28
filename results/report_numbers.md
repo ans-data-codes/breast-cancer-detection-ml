@@ -23,29 +23,29 @@ All test metrics below are measured on the same stratified 20% holdout. Malignan
 
 | Model | Accuracy | Precision | Recall | F1 | ROC-AUC | Training time (s) |
 |---|---:|---:|---:|---:|---:|---:|
-| Logistic Regression | 0.9649 | 0.9750 | 0.9286 | 0.9512 | 0.9960 | 0.198 |
-| K-Nearest Neighbors | 0.9386 | 0.9730 | 0.8571 | 0.9114 | 0.9825 | 1.304 |
-| Decision Tree | 0.9474 | 0.9500 | 0.9048 | 0.9268 | 0.9463 | 0.500 |
-| Gaussian Naive Bayes | 0.9211 | 0.9231 | 0.8571 | 0.8889 | 0.9891 | 0.068 |
-| Random Forest | 0.9737 | 1.0000 | 0.9286 | 0.9630 | 0.9950 | 9.640 |
-| Support Vector Machine | 0.9737 | 1.0000 | 0.9286 | 0.9630 | 0.9927 | 1.338 |
+| Logistic Regression | 0.9649 | 0.9750 | 0.9286 | 0.9512 | 0.9960 | 1.570 |
+| K-Nearest Neighbors | 0.9386 | 0.9730 | 0.8571 | 0.9114 | 0.9825 | 3.418 |
+| Decision Tree | 0.9474 | 0.9500 | 0.9048 | 0.9268 | 0.9463 | 2.959 |
+| Gaussian Naive Bayes | 0.9211 | 0.9231 | 0.8571 | 0.8889 | 0.9891 | 0.535 |
+| Random Forest | 0.9737 | 1.0000 | 0.9286 | 0.9630 | 0.9950 | 55.114 |
+| Support Vector Machine | 0.9737 | 1.0000 | 0.9286 | 0.9630 | 0.9927 | 8.906 |
 
 ## Test metrics: 17 features (report Table 6.4)
 
 | Model | Accuracy | Precision | Recall | F1 | ROC-AUC | Training time (s) |
 |---|---:|---:|---:|---:|---:|---:|
-| Logistic Regression | 0.9737 | 0.9756 | 0.9524 | 0.9639 | 0.9980 | 0.155 |
-| K-Nearest Neighbors | 0.9737 | 0.9756 | 0.9524 | 0.9639 | 0.9979 | 0.891 |
-| Decision Tree | 0.9386 | 0.9487 | 0.8810 | 0.9136 | 0.9216 | 0.398 |
-| Gaussian Naive Bayes | 0.9386 | 0.9730 | 0.8571 | 0.9114 | 0.9931 | 0.065 |
-| Random Forest | 0.9737 | 1.0000 | 0.9286 | 0.9630 | 0.9931 | 9.185 |
-| Support Vector Machine | 0.9825 | 1.0000 | 0.9524 | 0.9756 | 0.9970 | 1.468 |
+| Logistic Regression | 0.9737 | 0.9756 | 0.9524 | 0.9639 | 0.9980 | 1.456 |
+| K-Nearest Neighbors | 0.9737 | 0.9756 | 0.9524 | 0.9639 | 0.9979 | 3.131 |
+| Decision Tree | 0.9386 | 0.9487 | 0.8810 | 0.9136 | 0.9216 | 2.578 |
+| Gaussian Naive Bayes | 0.9386 | 0.9730 | 0.8571 | 0.9114 | 0.9931 | 0.536 |
+| Random Forest | 0.9737 | 1.0000 | 0.9286 | 0.9630 | 0.9931 | 54.822 |
+| Support Vector Machine | 0.9825 | 1.0000 | 0.9524 | 0.9756 | 0.9970 | 9.655 |
 
 ## Champion details
 
 - Champion: **Support Vector Machine** with K=17 features.
 - Confusion matrix counts: TP=40, FN=2, FP=0, TN=72.
-- Champion model training time for K=30: 1.338 seconds; for K=17: 1.468 seconds.
+- Champion model training time for K=30: 8.906 seconds; for K=17: 9.655 seconds.
 - PCA components needed for 95% variance: 10.
 - Model input has 30 measurements; SelectKBest applies the selected K inside the saved pipeline.
 

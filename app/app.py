@@ -86,13 +86,16 @@ with st.form("prediction_form"):
             st.markdown(f"#### {group_name}")
             for name in names:
                 key = f"measurement_{name}"
-                st.number_input(
-                    name.replace("_", " "),
-                    value=float(defaults[name]),
-                    key=key,
-                    format="%.6f",
-                    help=f"Dataset mean: {defaults[name]:.6f}",
-                )
+                input_options = {
+                    "key": key,
+                    "format": "%.6f",
+                    "help": f"Dataset mean: {defaults[name]:.6f}",
+                }
+                # The example buttons seed session state before the widgets
+                # are created, so only supply `value` for a fresh form.
+                if key not in st.session_state:
+                    input_options["value"] = float(defaults[name])
+                st.number_input(name.replace("_", " "), **input_options)
     predict_clicked = st.form_submit_button("Predict", type="primary", use_container_width=True)
 
 if predict_clicked:

@@ -3,11 +3,8 @@
 from __future__ import annotations
 
 import json
-import os
 import time
 from pathlib import Path
-
-os.environ.setdefault("LOKY_MAX_CPU_COUNT", str(os.cpu_count() or 1))
 
 import matplotlib
 
@@ -51,7 +48,7 @@ MODELS_DIR = ROOT / "models"
 
 MODEL_SPECS = [
     ("Logistic Regression", LogisticRegression(max_iter=5000, random_state=RANDOM_STATE), {"model__C": [0.01, 0.1, 1, 10, 100]}),
-    ("K-Nearest Neighbors", KNeighborsClassifier(), {"model__n_neighbors": [3, 5, 7, 9, 11], "model__weights": ["uniform", "distance"]}),
+    ("K-Nearest Neighbors", KNeighborsClassifier(n_jobs=1), {"model__n_neighbors": [3, 5, 7, 9, 11], "model__weights": ["uniform", "distance"]}),
     ("Decision Tree", DecisionTreeClassifier(random_state=RANDOM_STATE), {"model__max_depth": [3, 5, 7, None], "model__min_samples_split": [2, 5, 10]}),
     ("Gaussian Naive Bayes", GaussianNB(), {"model__var_smoothing": [1e-9, 1e-8, 1e-7]}),
     ("Random Forest", RandomForestClassifier(random_state=RANDOM_STATE), {"model__n_estimators": [100, 200, 300], "model__max_depth": [None, 5, 10]}),
@@ -158,7 +155,7 @@ def save_eda_figures(X, y, X_train):
     return {"pc1_explained_variance": float(pca.explained_variance_ratio_[0]), "pc2_explained_variance": float(pca.explained_variance_ratio_[1]), "components_for_95_percent": components_95}
 
 
-def save_model_figures(experiments, best, y_test):
+def save_model_figures(experiments, best, y_test, feature_names):
     """Create the four model evaluation figures."""
     best_metrics = best["metrics"]
 
@@ -198,7 +195,9 @@ def save_model_figures(experiments, best, y_test):
     # The tuned Random Forest's GridSearchCV refit used all training rows.
     rf = max((item for item in experiments if item["model"] == "Random Forest"), key=lambda item: item["cv_f1"])
     rf_pipeline = rf["estimator"]
-    selected_names = np.asarray(rf_pipeline.named_steps["selector"].get_feature_names_out())
+    selected_names = np.asarray(
+        rf_pipeline.named_steps["selector"].get_feature_names_out(input_features=feature_names)
+    )
     importances = rf_pipeline.named_steps["model"].feature_importances_
     top_indices = np.argsort(importances)[-10:][::-1]
     importance_data = pd.DataFrame({"Feature": selected_names[top_indices], "Importance": importances[top_indices]}).sort_values("Importance")
@@ -208,12 +207,6 @@ def save_model_figures(experiments, best, y_test):
     fig.tight_layout()
     fig.savefig(FIGURES_DIR / "fig_6_4_feature_importance.png", dpi=160)
     plt.close(fig)
-
-
-def fmt(value):
-    if isinstance(value, float):
-        return f"{value:.4f}"
-    return str(value)
 
 
 def write_report(metrics, pca_summary, feature_names):
@@ -315,7 +308,7 @@ def main():
     dump(best["estimator"], MODELS_DIR / "best_model.joblib")
     (MODELS_DIR / "feature_names.json").write_text(json.dumps(feature_names, indent=2), encoding="utf-8")
 
-    save_model_figures(experiments, best, y_test)
+    save_model_figures(experiments, best, y_test, feature_names)
 
     json_experiments = [
         {key: value for key, value in item.items() if key not in {"estimator", "test_probabilities"}}

@@ -36,8 +36,8 @@
     "fractal dimension_worst"
   ],
   "pca": {
-    "pc1_explained_variance": 0.44272025607526355,
-    "pc2_explained_variance": 0.1897118204403308,
+    "pc1_explained_variance": 0.4459352220227063,
+    "pc2_explained_variance": 0.18545255453685278,
     "components_for_95_percent": 10
   },
   "selection_rule": "Highest held-out test recall, then highest held-out test F1.",
@@ -49,7 +49,7 @@
         "model__C": 1
       },
       "cv_f1": 0.9640480895915677,
-      "training_time_seconds": 0.19833169999765232,
+      "training_time_seconds": 1.5696209999732673,
       "metrics": {
         "accuracy": 0.9649122807017544,
         "precision": 0.975,
@@ -71,7 +71,7 @@
         "model__C": 10
       },
       "cv_f1": 0.9549242573283495,
-      "training_time_seconds": 0.1547339999815449,
+      "training_time_seconds": 1.4561516999965534,
       "metrics": {
         "accuracy": 0.9736842105263158,
         "precision": 0.975609756097561,
@@ -94,7 +94,7 @@
         "model__weights": "uniform"
       },
       "cv_f1": 0.9632634032634033,
-      "training_time_seconds": 1.3043983999523334,
+      "training_time_seconds": 3.418383799958974,
       "metrics": {
         "accuracy": 0.9385964912280702,
         "precision": 0.972972972972973,
@@ -117,7 +117,7 @@
         "model__weights": "uniform"
       },
       "cv_f1": 0.9487552034241542,
-      "training_time_seconds": 0.8906919999863021,
+      "training_time_seconds": 3.1313889999873936,
       "metrics": {
         "accuracy": 0.9736842105263158,
         "precision": 0.975609756097561,
@@ -140,7 +140,7 @@
         "model__min_samples_split": 5
       },
       "cv_f1": 0.8968567664219839,
-      "training_time_seconds": 0.4998450999846682,
+      "training_time_seconds": 2.959378400002606,
       "metrics": {
         "accuracy": 0.9473684210526315,
         "precision": 0.95,
@@ -163,7 +163,7 @@
         "model__min_samples_split": 2
       },
       "cv_f1": 0.9145208750619197,
-      "training_time_seconds": 0.39798660000087693,
+      "training_time_seconds": 2.5783158999984153,
       "metrics": {
         "accuracy": 0.9385964912280702,
         "precision": 0.9487179487179487,
@@ -185,7 +185,7 @@
         "model__var_smoothing": 1e-09
       },
       "cv_f1": 0.9170390883626178,
-      "training_time_seconds": 0.0675696000107564,
+      "training_time_seconds": 0.5354169000056572,
       "metrics": {
         "accuracy": 0.9210526315789473,
         "precision": 0.9230769230769231,
@@ -207,7 +207,7 @@
         "model__var_smoothing": 1e-09
       },
       "cv_f1": 0.9093439135184866,
-      "training_time_seconds": 0.06541930005187169,
+      "training_time_seconds": 0.5355210000416264,
       "metrics": {
         "accuracy": 0.9385964912280702,
         "precision": 0.972972972972973,
@@ -230,7 +230,7 @@
         "model__n_estimators": 100
       },
       "cv_f1": 0.9552850541704228,
-      "training_time_seconds": 9.639761900005396,
+      "training_time_seconds": 55.11422849999508,
       "metrics": {
         "accuracy": 0.9736842105263158,
         "precision": 1.0,
@@ -253,7 +253,7 @@
         "model__n_estimators": 300
       },
       "cv_f1": 0.93983128372944,
-      "training_time_seconds": 9.18514509999659,
+      "training_time_seconds": 54.821678399981465,
       "metrics": {
         "accuracy": 0.9736842105263158,
         "precision": 1.0,
@@ -277,7 +277,7 @@
         "model__kernel": "rbf"
       },
       "cv_f1": 0.9674103219883271,
-      "training_time_seconds": 1.3383685000007972,
+      "training_time_seconds": 8.906232400040608,
       "metrics": {
         "accuracy": 0.9736842105263158,
         "precision": 1.0,
@@ -301,7 +301,7 @@
         "model__kernel": "rbf"
       },
       "cv_f1": 0.9558887489322272,
-      "training_time_seconds": 1.4684026000322774,
+      "training_time_seconds": 9.655214399972465,
       "metrics": {
         "accuracy": 0.9824561403508771,
         "precision": 1.0,
@@ -326,7 +326,7 @@
       "model__kernel": "rbf"
     },
     "cv_f1": 0.9558887489322272,
-    "training_time_seconds": 1.4684026000322774,
+    "training_time_seconds": 9.655214399972465,
     "metrics": {
       "accuracy": 0.9824561403508771,
       "precision": 1.0,
